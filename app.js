@@ -1,10 +1,11 @@
-const connectToDB = require('./db/connect');
+require('dotenv').config();
 const express = require('express');
 const app = express();
 
 
+const connectToDB = require('./db/connect');
 
-const connectionString = "mongodb+srv://airas:12345@express.y1gzl.mongodb.net/TASK-MANAGER?retryWrites=true&w=majority";
+
 
 
 app.use(express.json());
@@ -19,7 +20,7 @@ app.use("/api/v1/task", tasksRoute);
 
 const start = async () => {
   try {
-    await connectToDB(connectionString);
+    await connectToDB(process.env.MONGO_URI);
     console.log('DB connected');
     app.listen(3000, () => {
       console.log('Server is listening on port 3000....');
